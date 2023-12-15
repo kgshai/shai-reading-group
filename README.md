@@ -1,8 +1,14 @@
 # Welcome
 ## If you're reading this from Github or your Markdown viewer:
+<<<<<<< HEAD
 Please follow the following steps to install the SHAI Research Vault. Then, read the section below the instructions in Obsidian.
 1. Clone [this repository](https://github.com/kgshai/shai-reading-group) to a local folder
 2. Download [Obsidian](https://obsidian.ml/)
+=======
+Please follow the following steps to install the ML@B Research Vault. Then, read the section below the instructions in Obsidian.
+1. Clone [this repository](https://github.com/mlberkeley/reading-group) to a local folder
+2. Download [Obsidian](https://obsidian.md/)
+>>>>>>> 7fe647e1684cc791c0b641446898accc118dbb99
 3. Open Obsidian and click the “Open” button next to “Open folder as vault” ![Open Instructions | 200](Images/README/open.png)
 4. Navigate to the folder you cloned the `shai-reading-group` repository into ![Navigation Instructions | 400](Images/README/navigate.png)
 5. You should see the following Directed Acyclic Graph (DAG) in the Obsidian Graph Viewer ![DAG | 300](Images/README/dag.png)
