@@ -1,5 +1,5 @@
 # Policy Gradient
-Requirements: [[Value Functions]], [[Neural Network]]
+Requirements: [[Value Functions]], [[Neural Network#]]
 
 ## Resources
 - [Sutton & Barto 13.1 - 13.4](http://incompleteideas.net/book/RLbook2020.pdf) 
@@ -24,7 +24,7 @@ where $\mu^{\pi}(s\mid s_0)$ is the distribution of state visits from state $s_0
 
 Approximating expectations is simple: the states $s$ seen during trajectories are distributed according to $\mu^{\pi}(s\mid s_0)$, and the actions $a$ are distributed according to $\pi(a\mid s)$. Hence sampling state-action pairs from trajectories provides a Monte Carlo approximation of the expectations.
 
-Representing $\pi_\theta$ is merely a matter of standard distribution [[Distribution Modeling with NNs|parameterization]], with the additional detail that we use the surrogate loss $L(s, a, \theta) = Q^{\pi}(s, a)\ln \pi_\theta(a\mid s)$ as our loss function (as opposed to something like the negative-log-likelihood loss).
+Representing $\pi_\theta$ is merely a matter of standard distribution [[Distribution Modeling with NNs#Sampling via Parameterization]], with the additional detail that we use the surrogate loss $L(s, a, \theta) = Q^{\pi}(s, a)\ln \pi_\theta(a\mid s)$ as our loss function (as opposed to something like the negative-log-likelihood loss).
 
 Approximating $Q^{\pi_\theta}$ involves more in-depth design choices, which we explore below. The upshot is that we will use one of the following approximations, which differ only in application of discounts:
 $$\nabla_\theta J(\theta) \approx \nabla_\theta\left[\frac{1}{N}\sum_{i=1}^N\Bigg(\sum_{t=0}^T \gamma^{t} r^{(i)}_t\Bigg)\Bigg(\sum_{t=0}^T \ln\pi_\theta\Big(a_t^{(i)}\mid s_t^{(i)}\Big)\Bigg)\right]$$
