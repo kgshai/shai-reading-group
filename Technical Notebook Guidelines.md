@@ -1,0 +1,3 @@
+- Explain why dependencies are being used, and how calls to their APIs are used
+- Take note of common implementation patterns that are generally useful in other software
+- Explain how implementation relates to theory (if at all)

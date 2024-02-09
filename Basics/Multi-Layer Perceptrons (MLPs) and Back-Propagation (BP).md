@@ -34,6 +34,134 @@ Let's consider a perceptron where $\vec x = x \in\mathbb{R}$, $\vec y = y\in\mat
 If we set $N = 2$, we can think of the result as the sum of two shifted/scaled $\operatorname{ReLU}$ functions, so we can represent any piecewise linear function with 2 elbows (three piecewise linear segments). An example is plotted in the image below, with the $\operatorname{ReLU}$ MLP shown in blue and an example polynomial shown in orange.
 ![](Images/MLPBP/2_elbow.png)
 As $N\to\infty$, the number of elbows in our piecewise linear function increases to $\infty$, and we can represent piecewise linear functions with more and more segments. Any continuous function can be approximated as a piecewise linear function as the number of segments increases to $\infty$, so we find that as our hidden layer gets larger, a perceptron can represent *any continuous function*! This is a simple variety of a class of theorems called **Universal Approximation Theorems**, which state conditions under which a neural network can represent all functions from a certain class. In this case, we found that infinite-width 1-layer perceptrons can represent all continuous functions. Studying neural networks in the limit as all layer widths tend to $\infty$ is a huge topic in neural network theory.
+
+
+
+```python
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.widgets import Button, Slider
+X = np.linspace(-4, 4, 1000)
+Y = X * X * X - 9 * X
+plt.plot(X, Y)
+plt.show()
+
+
+# The parametrized function to be plotted
+def f(X, w1, w2, b1, b2):
+    return w2 * np.maximum(w1 * X + b1, np.zeros_like(X)) + b2
+
+# Define initial parameters
+init_w1 = 5
+init_w2 = 3
+init_b1 = -3
+init_b2 = 3
+init_lr = -6
+
+# Create the figure and the line that we will manipulate
+fig, ax = plt.subplots()
+line, = ax.plot(X, f(X, init_w1, init_w2, init_b1, init_b2), lw=2)
+ax.plot(X, Y, lw=2)
+ax.set_ylim(-40, 40)
+
+# adjust the main plot to make room for the sliders
+fig.subplots_adjust(left=0.25, bottom=0.5)
+
+# Make a horizontal slider to control the frequency.
+axw1 = fig.add_axes([0.25, 0.35, 0.65, 0.03])
+w1_slider = Slider(
+    ax=axw1,
+    label='W1',
+    valmin=-10,
+    valmax=10,
+    valinit=init_w1,
+)
+
+axb1 = fig.add_axes([0.25, 0.3, 0.65, 0.03])
+b1_slider = Slider(
+    ax=axb1,
+    label='b1',
+    valmin=-10,
+    valmax=10,
+    valinit=init_b1,
+)
+
+# Make a vertically oriented slider to control the amplitude
+axw2 = fig.add_axes([0.25, 0.25, 0.65, 0.03])
+w2_slider = Slider(
+    ax=axw2,
+    label="W2",
+    valmin=-10,
+    valmax=10,
+    valinit=init_w2
+)
+
+axb2 = fig.add_axes([0.25, 0.2, 0.65, 0.03])
+b2_slider = Slider(
+    ax=axb2,
+    label='b2',
+    valmin=-10,
+    valmax=10,
+    valinit=init_b2,
+)
+
+axlr = fig.add_axes([0.25, 0.1, 0.65, 0.03])
+lr_slider = Slider(
+    ax = axlr,
+    label="log(learning rate)",
+    valmin=-10,
+    valmax=0,
+    valinit=init_lr
+)
+
+
+# The function to be called anytime a slider's value changes
+def update(val):
+    line.set_ydata(f(X, w1_slider.val, w2_slider.val, b1_slider.val, b2_slider.val))
+    fig.canvas.draw_idle()
+
+
+# register the update function with each slider
+w1_slider.on_changed(update)
+w2_slider.on_changed(update)
+b1_slider.on_changed(update)
+b2_slider.on_changed(update)
+
+# Create a `matplotlib.widgets.Button` to reset the sliders to initial values.
+resetax = fig.add_axes([0.8, 0.025, 0.1, 0.04])
+button = Button(resetax, 'Reset', hovercolor='0.975')
+learnax = fig.add_axes([0.6, 0.025, 0.1, 0.04])
+learnbutton = Button(learnax, 'GD Step', hovercolor='0.975')
+
+
+def reset(event):
+    w1_slider.reset()
+    w2_slider.reset()
+    b1_slider.reset()
+    b2_slider.reset()
+button.on_clicked(reset)
+
+def learn(event):
+    w1 = w1_slider.val
+    w2 = w2_slider.val
+    b1 = b1_slider.val
+    b2 = b2_slider.val
+    lr = lr_slider.val
+    h = np.maximum(w1 * X + b1, np.zeros_like(X))
+    dw2 = 2 * np.dot(w2 * h + b2 - Y, h)
+    db2 = 2 * np.dot(w2 * h + b2 - Y, np.ones_like(h))
+    dw1 = 2 * np.dot(w2 * h + b2 - Y, w2 * np.where(w1 * X + b1 < 0, np.zeros_like(X), X))
+    db1 = 2 * np.dot(w2 * h + b2 - Y, w2 * np.where(w1 * X + b1 < 0, np.zeros_like(X), np.ones_like(X)))
+    w1_slider.set_val(w1 - (10 ** lr) * dw1)
+    w2_slider.set_val(w2 - (10 ** lr) * dw2)
+    b1_slider.set_val(b1 - (10 ** lr) * db1)
+    b2_slider.set_val(b2 - (10 ** lr) * db2)
+    line.set_ydata(f(X, w1_slider.val, w2_slider.val, b1_slider.val, b2_slider.val))
+    fig.canvas.draw_idle()
+learnbutton.on_clicked(learn)
+
+plt.show()
+```
 #### Gradient Descent for Perceptrons
 Let's see how gradient descent works to adjust the weights of a 1-layer perceptron. We'll suppose we have $\vec x\in\mathbb{R}^I$, $\vec y\in\mathbb{R}^O$, and $\vec a, \vec h\in\mathbb{R}^N$, so our input has dimension $I$, our output has dimension $O$, and our hidden layer has dimension $N$. We suppose are given the **loss function** $L(\hat y, \vec y) = \Big\lVert\vec f_\theta(\vec x) - \vec y\Big\rVert_2^2$, where $\hat y = \vec f_\theta(\vec x)$ is the predicted value of $\vec y$. We've gathered the weight matrices into **parameters** $\theta = (W^{(1)}, W^{(2)}, \vec b^{(1)}, \vec b^{(2)})$ of the model; we often think of this as a vector in a **parameter space**, and with this intuition, [[Linear Regression with Gradient Descent#^0c8da6|gradient descent finds the direction in parameter space that decreases the loss the most]] (at least, based on what the loss surface looks like around the current parameters). Now, we derive the gradients for the 1-layer perceptron parameters. First, we note the following relations describing the perceptron:
 $$\begin{align*}L &= \sum_i (\hat y_i - y_i)^2\\\hat y_i &= \sum_j W^{(2)}_{ij}h_j +  b^{(2)}_i\\h_i &= \sigma(a_i)\\ a_i &= \sum_j W^{(1)}_{ij}x_j + b^{(1)}_j\end{align*}$$
