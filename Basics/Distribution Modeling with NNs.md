@@ -1,4 +1,3 @@
-# Distribution Modeling with NNs
 
 ## Introduction
 Suppose there's a distribution over a variable $y\in Y$ we want to know. By "want to know", we mean we either
