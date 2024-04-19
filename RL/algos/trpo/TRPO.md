@@ -1,5 +1,5 @@
 # Trust Region Policy Optimization
-Requirements: [[Importance Sampling for PG]], [[Natural PG]], [[PG]], [[Conjugate Gradient Method]], [[KL Divergence]], [[Pinsker's Inequality]]
+Requirements: [[Importance Sampling for PG]], [[Natural PG]], [[PG]], [[Conjugate Gradient Method]], [[Basics/KL Divergence]], [[Pinsker's Inequality]]
 ## Resources
 - [Spinning Up](https://spinningup.openai.com/en/latest/algorithms/trpo.html)
 - [Original TRPO Paper](https://arxiv.org/abs/1502.05477)
@@ -80,7 +80,7 @@ TRPO is applicable to
 > $\qquad$ Run GD on $L(\phi)$ to update $\phi$
 
 ## Analysis
-Here we prove that constraining expected [[KL Divergence]] between policies effectively constrains the distance between their policy distributions and state visitiation distributions for discrete state and action spaces and deterministic dynamics:
+Here we prove that constraining expected [[Basics/KL Divergence]] between policies effectively constrains the distance between their policy distributions and state visitiation distributions for discrete state and action spaces and deterministic dynamics:
 $$\begin{align*}D_{\text{KL}}(\pi_\phi(\cdot\mid s) \vert\vert \pi_\theta(\cdot\mid s)) \leq \varepsilon &\implies \lvert \pi_\theta(a\mid s)-\pi_\phi(a\mid s)\rvert\leq \sqrt{\frac{\varepsilon}{2}}\\&\implies \lvert \mu^{\pi_\theta}(s_t\mid s_0)-\mu^{\pi_\phi}(s_t\mid s_0)\rvert \leq t\sqrt{2\varepsilon}\end{align*}$$
 The first of these facts follows directly from [[Pinsker's Inequality]], which states that for any distributions $P$ and $Q$ on a space $X$:
 $$\sup_{x\in X}\big\lvert P(x) - Q(x)\big\rvert \leq \sqrt{\frac{D_{\text{KL}}(P\vert\vert Q)}{2}}$$

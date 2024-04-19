@@ -27,4 +27,3 @@ Historical Resources: A bulleted list of links to historical resources, with des
 - Mathematical derivations of propositions presented in the [[#Introduction|introduction]], where the derivation *doesn't shed any light* on the meaning or use cases of the proposition
 - Diagrams showing details of system architecture that are important for a working solution, but not conceptually central
 - Paragraphs that relate the content of the [[#Introduction|introduction]] to more advanced concepts, which are only fully explored in other notes
-- Additional information about the concept which are relevant in downstream concepts

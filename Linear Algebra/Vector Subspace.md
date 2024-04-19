@@ -1,0 +1,19 @@
+Dependencies: [[Vector Space]]
+Resources: [Axler Section 1C 1.33 - 1.35](https://linear.axler.net/LADR4e.pdf)
+## Introduction
+Consider $\mathbb R^3$, a vector space whose elements can be visualized as arrows in 3D space starting at the origin. Notice that this vector space contains a subset $S = \{(x_1, x_2, 0) \mid x_1, x_2\in\mathbb R\}$, which can be visualized as arrows in the $xy$-plane. Indeed, this subset is a vector space of its own: $S$ contains the zero vector, and if we add any two vectors in $S$, or multiply any vector in $S$ by a scalar, we get another vector in $S$. This is an example of a **vector subspace**, often simply referred to as a **subspace**. Considering subspaces allows us to greatly expand our examples of vector spaces. Additionally, they play a crucial role when we consider linear maps, which are maps between vector spaces that "respect" vector space operations.
+
+## Definition
+A subset $\mathcal U$ of a vector space $\mathcal V$ is a **subspace** if it is also a vector space with the same identity, addition, and scalar multiplication as $\mathcal V$. A subset $\mathcal U\subset \mathcal V = (V, \mathbb F)$ is a subspace if and only if it satisfies three conditions:
+- Additive Identity: $\vec 0\in \mathcal U$
+- Additive Closure: $\vec x + \vec y \in\mathcal U$ for all $\vec x, \vec y \in\mathcal U$
+- Multiplicative Closure: $c\vec x\in\mathcal U$ for all $c\in\mathbb F$ and $\vec x\in\mathcal U$
+
+## Examples
+Here are some elementary examples of subspaces:
+- In $\mathbb R^2$, the following are subspaces: $\{(0, 0)\}$, the point at the origin; $\{(x, 0) \mid x\in\mathbb R\}$, the x-axis; $\{(x, 2x)\mid x\in\mathbb R\}$, the line $y = 2x$; $\{(0, y)\mid y\in\mathbb R\}$, the y-axis; $\{(x, y)\mid x, y\in\mathbb R\}$, the entire plane. However, the parabola $\{(0, x^2)\mid x\in\mathbb R\}$ is not a subspace, nor is $\{(x, x+1)\mid x\in\mathbb R\}$, the line $y = x+1$.
+- In $\mathbb C^3$, the following are subspaces: $\{\vec 0\}$, $\{(x, 0, 0) \mid x\in\mathbb C\}$, $\{(x, 0, 2x)\mid x\in\mathbb C\}$, $\{(0, y, 0)\mid y\in\mathbb C\}$, $\{(x, y)\mid x, y, 0\in\mathbb C\}$, $\{(x, 2x + y, y)\mid x, y\in\mathbb C\}$, and $\mathbb C^3$ itself. However, $\{(c, \bar c)\mid c\in\mathcal C\}$ where $\bar c$ is the complex conjugate is not a subspace, nor is $\{(i, 0)\}$. (Exercise: prove that these sets are not subspaces using counterexamples.)
+- For any vector space $\mathcal V$, both $\mathcal V$ itself and $\{\vec 0\}$ are subspaces. They are called **trivial subspaces**.
+- For any vector space $\mathcal V = (V, \mathbb F)$ and $\vec x\in\mathcal V$, the set $\{c\vec x \mid c\in\mathbb F\}$, i.e. the scalar multiples of a given vector $\vec x$, is a subspace.
+- For any vector space $\mathcal V = (V, \mathbb F)$ and $\vec x_1, \dots, \vec x_n\in\mathcal V$, the set $\{a_1\vec x_1 + \dots a_n\vec x_n\mid a_1, \dots, a_n\in\mathbb F\}$ of *linear combinations* of these $n$ vectors is a subspace of $\mathcal V$. (This is also a subspace if there are infinitely, even uncountably many vectors that are linearly combined.)
+- For the vector space $\{f:\mathbb R\to\mathbb R\}$ of functions from reals to reals, the set $\{f:\mathbb R\to\mathbb R \mid f(37) = 0\}$ is a subspace, since any two functions that are zero at 37 will add to a function that is 0 at 37, and likewise for scalar multiplication. The set $\{f: \mathbb R\to\mathbb R \mid f(37) - 2f(40)= 0\}$ is also a subspace. However, $\{f:\mathbb R\to\mathbb R \mid f(37) = 1\}$ is not a subspace, and neither is $\{f: \mathbb R\to\mathbb R \mid f(37) - 2f(40)= 5\}$. (Exercise: prove that these sets are not subspaces using counterexamples.)

@@ -66,9 +66,6 @@ $$\begin{align*}\mathop{\mathbb E}_{\tau \sim \mathcal{T}^*(\tau \mid s)} &= \ma
 In most situations we don't know $\pi^*$, so this decomposition is useless. However, in the original maximization objective, we are taking the expectation of the total reward, and $\pi^*$ is the policy which maximizes the total reward. Therefore we can write
 $$\begin{align*}\mathop{\mathbb E}_{\tau \sim \mathcal{T}^*(\tau \mid s)}\Bigg[\sum_{t=0}^Tr(s_t, a_t)\Bigg] &= \max_{a_0\in \mathcal A}\;\mathop{\mathbb E}_{s_1\sim \mathcal{T}(s_1\mid s, a_0)}\;\max_{a_1\in \mathcal A}\;\mathop{\mathbb E}_{s_2\sim \mathcal{T}(s_2\mid s_1, a_1)} \dots\Bigg[\sum_{t=0}^Tr(s_t, a_t)\Bigg]\\
 \mathop{\mathbb E}_{\tau \sim \mathcal{T}^*(\tau \mid s, a)}\Bigg[\sum_{t=0}^Tr(s_t, a_t)\Bigg] &= \mathop{\mathbb E}_{s_1\sim \mathcal{T}(s_1\mid s, a)}\;\max_{a_1\in \mathcal A}\;\mathop{\mathbb E}_{s_2\sim \mathcal{T}(s_2\mid s_1, a_1)}\;\max_{a_2\in \mathcal A} \dots\Bigg[\sum_{t=0}^Tr(s_t, a_t)\Bigg]\end{align*}$$
-### Sampling from Trajectories
-Suppose we wanted to sample individual states from our trajectories. When we build learning algorithms to solve MDPs, this is necessary since our learning algorithms will train on previously seen states. Given that our trajectories start at a state $s_0$, what di
-# finish section on state visitation distributions!!
 
 ### Infinite Horizon MDPs
 
@@ -115,7 +112,5 @@ Also note the following issues with the above MDP representation of this task, w
 - Even if states were measurable, the transition function $\mathcal T$ is extremely complicated due to the incorporation of multiple scales of physical phenomena. We don't have a simulator to represent $\mathcal T(s'\mid s, a)$. (Except for the real world, and using this simulator would require letting astronauts die in landing attempts!)
 - Generally, in order to model everything we formally *must*, we have included a lot of information that we *can't* model, and some of it is practically irrelevant (e.g. it's very unlikely that our intended landing spot will be hit by an asteroid right before landing, changing the lunar terrain, but this possibility is included in our state space and transition function). However, it's tough to eliminate irrelevant considerations without eliminating some relevant ones as well.
 This example illustrates some drawbacks of the very general MDP formulation of tasks: using it to solve real-world problems without very wisely chosen state and action spaces can introduce significant complexity. We managed to put a man on the moon without MDPs!
-#### i want to figure out what i meant
-We now see we have a choice as to how to interpret the discount factor. We could interpret it as a manual change in objective to provide stability in Infinite-Horizon MDPs; this is called the **Copenhagen interpretation**, after the Copenhagen interpretation of Quantum Physics, as it essentially requires accepting the discount factor without deeper explanation. We could also interpret the discount factor as representing expected total reward in a modified MDP with a death state; this is known as the **death state interpretation**. Surprisingly, these two interpretations of the discount factor have distinct real-world consequences. (?) ^5c76de
 
 

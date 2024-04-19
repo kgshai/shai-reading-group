@@ -10,7 +10,7 @@ Requirements: [[TQL]], [[Neural Network]], [[Distribution Modeling with NNs]]
 ## Introduction
 You've seen how [[TQL]] can be used to solve MDPs. Recall that our $Q$ function is represented as an array/table of size $|S \times A|$. The larger our state and/or action space, the costlier this representation becomes. 
 
-The core idea behing a Deep Q-network is to represent the $Q$ function with a deep neural network. The associated algorithm, deep Q-learning, trains the deep neural network to output $Q^*(s, a)$ for any input state-action pair. This allows us to extract the optimal policy in a discrete, finite action space, since $\pi^*(a \mid s) = \mathop{\text{argmax}}_{a\in A} Q^*(s, a)$.
+The core idea behind a Deep Q-network is to represent the $Q$ function with a deep neural network. The associated algorithm, deep Q-learning, trains the deep neural network to output $Q^*(s, a)$ for any input state-action pair. This allows us to extract the optimal policy in a discrete, finite action space, since $\pi^*(a \mid s) = \mathop{\text{argmax}}_{a\in A} Q^*(s, a)$.
 
 ## Strategy
 
@@ -57,14 +57,14 @@ DQN can be used to solve MDPs with
 - Number of total steps $T$
 - Replay Buffer capacity $N$
 - Target update rate $\tau$
-- Exploration parameter $\ep$
+- Exploration parameter $\varepsilon$
 **Algorithm**:
 > Initialize replay buffer $\mathcal{D}$ with capacity $N$\
 > Initialize $Q$-function neural network with random weights $\theta$\
 > Initialize target network with random weights $\theta'=\theta$\
 > Initialize environment
 > **for** step $\in\{1, \dots, T\}$ **do**:\
-> $\qquad$ With probability $\ep$: \
+> $\qquad$ With probability $\varepsilon$: \
 > $\qquad\qquad$ Select a random action $a$\
 > $\qquad$ Otherwise: \
 > $\qquad\qquad$ Select $a = \max_{a\in A}Q_\theta(s_t, a)$\
